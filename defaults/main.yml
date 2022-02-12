@@ -1,7 +1,7 @@
 ---
 # defaults file for ansible-role-junos-exporter
-junos_exporter_version: v0.9.15
-junos_exporter_binary: 'https://github.com/FreedomNetNL/junos_exporter/releases/download/{{ junos_exporter_version }}/junos-exporter_{{ junos_exporter_version }}_linux_{{ go_arch_map[ansible_architecture] | default(ansible_architecture) }}.tar.gz'
+junos_exporter_version: 0.9.15
+junos_exporter_binary: 'https://github.com/FreedomNetNL/junos_exporter/releases/download/v{{ junos_exporter_version }}/junos-exporter_{{ junos_exporter_version }}_linux_{{ go_arch_map[ansible_architecture] | default(ansible_architecture) }}.tar.gz'
 junos_exporter_sha256sums: 'https://github.com/FreedomNetNL/junos_exporter/releases/download/v{{ junos_exporter_version }}/junos-exporter_{{ junos_exporter_version }}_checksums.txt'
 
 junos_exporter_web_listen_address: "0.0.0.0:9116"

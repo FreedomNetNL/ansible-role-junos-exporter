@@ -1,0 +1,48 @@
+---
+# defaults file for ansible-role-junos-exporter
+junos_exporter_version: v0.9.15
+junos_exporter_binary: 'https://github.com/FreedomNetNL/junos_exporter/releases/download/{{ junos_exporter_version }}/junos-exporter_{{ junos_exporter_version }}_linux_{{ go_arch_map[ansible_architecture] | default(ansible_architecture) }}.tar.gz'
+junos_exporter_sha256sums: 'https://github.com/FreedomNetNL/junos_exporter/releases/download/v{{ junos_exporter_version }}/junos-exporter_{{ junos_exporter_version }}_checksums.txt'
+
+junos_exporter_web_listen_address: "0.0.0.0:9116"
+junos_exporter_log_level: info
+
+
+junos_exporter_config:
+  devices: []
+#    - host: router1
+#      key_file: /path/to/key
+#      username: exporter
+#      password: secret
+#      # Optional
+#      # interface_description_regex: '\[([^=\]]+)(=[^\]]+)?\]'
+#      features:
+#        isis: true
+  
+  # Optional
+  # interface_description_regex: '\[([^=\]]+)(=[^\]]+)?\]'
+  features:
+    alarm: true
+    environment: true
+    bgp: true
+    ospf: true
+    isis: false
+    nat: false
+    l2circuit: true
+    ldp: true
+    routes: true
+    routing_engine: true
+    firewall: false
+    interfaces: true
+    interface_diagnostic: true
+    interface_queue: true
+    storage: true
+    accounting: true
+    ipsec: false
+    security: true
+    fpc: true
+    rpki: true
+    rpm: false
+    satellite: false
+    system: true
+    power: true

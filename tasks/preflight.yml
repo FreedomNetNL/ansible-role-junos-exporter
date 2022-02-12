@@ -1,0 +1,7 @@
+---
+- name: "Get checksum for {{ go_arch_map[ansible_architecture] | default(ansible_architecture) }} architecture"
+  set_fact:
+    snmp_exporter_checksum: "{{ item.split(' ')[0] }}"
+  with_items:
+    - "{{ lookup('url', junos_exporter_sha256sums, wantlist=True) | list }}"
+  when: "('junos-exporter_' + junos_exporter_version + '_linux_' + (go_arch_map[ansible_architecture] | default(ansible_architecture)) + '.tar.gz') in item"

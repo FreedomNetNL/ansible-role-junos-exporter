@@ -1,0 +1,13 @@
+---
+# handlers file for ansible-role-junos-exporter
+- name: reload junos exporter
+  systemd:
+    daemon_reload: true
+    name: junos_exporter
+    state: reloaded
+
+- name: restart junos exporter
+  systemd:
+    daemon_reload: true
+    name: junos_exporter
+    state: restarted

@@ -1,0 +1,38 @@
+---
+- name: Download junos_exporter binary to local folder
+  become: false
+  get_url:
+    url: "https://github.com/prometheus/junos_exporter/releases/download/v{{ junos_exporter_version }}/junos_exporter-{{ junos_exporter_version }}.linux-{{ go_arch_map[ansible_architecture] | default(ansible_architecture) }}.tar.gz"
+    dest: "/tmp"
+    checksum: "sha256:{{ junos_exporter_checksum }}"
+  register: _download_binary
+  until: _download_binary is success
+  retries: 5
+  delay: 2
+  delegate_to: localhost
+  check_mode: false
+
+- name: Unpack junos_exporter binary
+  become: false
+  unarchive:
+    src: "/tmp/junos_exporter-{{ junos_exporter_version }}_linux-{{ go_arch_map[ansible_architecture] | default(ansible_architecture) }}.tar.gz"
+    dest: "/tmp"
+    creates: "/tmp/junos_exporter-{{ junos_exporter_version }}_linux-{{ go_arch_map[ansible_architecture] | default(ansible_architecture) }}/junos_exporter"
+  delegate_to: localhost
+  check_mode: false
+
+- name: Propagate SNMP Exporter binaries
+  copy:
+    src: "/tmp/junos_exporter-{{ junos_exporter_version }}_linux-{{ go_arch_map[ansible_architecture] | default(ansible_architecture) }}/junos_exporter"
+    dest: "/usr/local/bin/junos_exporter"
+    mode: 0755
+  notify:
+    - restart junos exporter
+
+- name: Create configuration directory
+  file:
+    path: "/etc/junos_exporter"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755

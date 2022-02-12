@@ -5,12 +5,11 @@ StartLimitInterval=0
 
 [Service]
 Type=simple
-User=nobody
+User={{ junos_exporter_user }}
 Group={{ 'nogroup' if ansible_os_family == 'Debian' else 'nobody' }}
 ExecReload=/bin/kill -HUP $MAINPID
 ExecStart=/usr/local/bin/junos_exporter \
   --web.listen-address={{ junos_exporter_web_listen_address }} \
-  --log.level={{ junos_exporter_log_level }} \
   --config.file=/etc/junos_exporter/config.yml
 
 KillMode=process

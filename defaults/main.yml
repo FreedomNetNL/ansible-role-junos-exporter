@@ -7,9 +7,14 @@ junos_exporter_sha256sums: 'https://github.com/FreedomNetNL/junos_exporter/relea
 junos_exporter_web_listen_address: "0.0.0.0:9116"
 junos_exporter_log_level: info
 
+junos_exporter_user: nobody
+
 
 junos_exporter_config:
-  devices: []
+  devices: "{{ junos_exporter_config_devices | default([]) }}"
+  features: "{{ junos_exporter_config_features | default([]) }}"
+
+junos_exporter_config_devices: []
 #    - host: router1
 #      key_file: /path/to/key
 #      username: exporter
@@ -18,31 +23,29 @@ junos_exporter_config:
 #      # interface_description_regex: '\[([^=\]]+)(=[^\]]+)?\]'
 #      features:
 #        isis: true
-  
-  # Optional
-  # interface_description_regex: '\[([^=\]]+)(=[^\]]+)?\]'
-  features:
-    alarm: true
-    environment: true
-    bgp: true
-    ospf: true
-    isis: false
-    nat: false
-    l2circuit: true
-    ldp: true
-    routes: true
-    routing_engine: true
-    firewall: false
-    interfaces: true
-    interface_diagnostic: true
-    interface_queue: true
-    storage: true
-    accounting: true
-    ipsec: false
-    security: true
-    fpc: true
-    rpki: true
-    rpm: false
-    satellite: false
-    system: true
-    power: true
+
+junos_exporter_config_features:
+  alarm: true
+  environment: true
+  bgp: true
+  ospf: true
+  isis: false
+  nat: false
+  l2circuit: false
+  ldp: false
+  routes: true
+  routing_engine: false
+  firewall: false
+  interfaces: false
+  interface_diagnostic: true
+  interface_queue: false
+  storage: false
+  accounting: false
+  ipsec: false
+  security: false
+  fpc: false
+  rpki: false
+  rpm: false
+  satellite: false
+  system: false
+  power: false
